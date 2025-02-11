@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, Typography, Container, Grid2 as Grid, useTheme, CardActionArea, Link } from "@mui/material";
+import { Card, CardContent, Typography, Container, Grid2 as Grid, useTheme } from "@mui/material";
 import { useRouter } from "next/router";
 
 // Llamada al API

@@ -1,6 +1,5 @@
 import Head from "next/head";
 import PokemonTypeList from "../components/PokemonTypeList";
-import HeaderBar from "../components/Heder";
 import { ThemeProvider } from "@mui/material";
 import theme from "@/styles/theme";
 
