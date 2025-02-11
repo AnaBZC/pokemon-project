@@ -9,8 +9,8 @@ import {
   CardContent,
   Button,
   Pagination,
-  CardMedia,
-  Box
+  Box,
+  styled
 } from "@mui/material";
 import DetailModal from "@/components/DetailsModal";
 
@@ -30,6 +30,10 @@ const TypePage = () => {
   const POKEMON_IMG_BASE_URL =
     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 
+  /** 
+   * @author azuniga
+   * 
+   */
   useEffect(() => {
     if (type) {
       axios
@@ -75,6 +79,10 @@ const TypePage = () => {
     }, // Efecto de escala en hover
   };
 
+  const titleStyle = {
+    marginBottom: '2rem',
+  }
+
   const imageStyle = {
     width: "100%",
     height: "70%",
@@ -88,25 +96,86 @@ const TypePage = () => {
     transition: "opacity 0.3s ease-in-out",
   }
 
+  const pagerStyle = {
+    justifyContent: 'center',
+    marginTop: '2rem',
+  }
 
   const listContainerStyle = {
     justifyContent: 'space-between',
   }
 
+  const FlippableCard = styled('div')({
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    transition: 'transform 0.6s',
+    transformStyle: 'preserve-3d',
+    '&:hover': {
+      transform: 'rotateY(180deg)'
+    }
+  })
+
+  const CardFace = styled(Card)({
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backfaceVisibility: 'hidden',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  });
+
+  const FrontFace = styled(CardFace)({
+    backgroundColor: '#ccc',
+  });
+
+  const BackFace = styled(CardFace)({
+    backgroundColor: '#fff',
+    transform: 'rotateY(180deg)',
+  });
+
+  const FlipCard = ({p}) => {
+    return (
+      <Grid item xs={12} sm={6} md={4} sx={{ perspective: '1000px' }}>
+        <FlippableCard>
+          <FrontFace />
+
+          <BackFace onClick={() => openDetailModal(p.pokemon)}>
+            <CardContent>
+              <Box component="img"
+                src={POKEMON_IMG_BASE_URL + p.pokemon.url.split("/").at(-2) + ".png"}
+                alt={"Pokemon" + p.pokemon.name}
+                sx={imageStyle}
+                className="hover-image"
+              />
+
+              <Typography variant="h6">
+                {p.pokemon.name.charAt(0).toUpperCase() +
+                  p.pokemon.name.slice(1)}
+              </Typography>
+            </CardContent>
+          </BackFace>
+        </FlippableCard>
+
+      </Grid>
+    )
+  }
+
   return (
     <Container sx={{ marginTop: 4, textAlign: "center" }}>
-      <Typography variant="h4" gutterBottom>
-        Pokémon de tipo {pokemonTypeName}
+      <Typography variant="h4" gutterBottom sx={titleStyle}>
+        Pokémon type {pokemonTypeName}
       </Typography>
       <Grid container spacing={2} sx={listContainerStyle}>
         {paginatedList.map((p, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card sx={cardStyle} onClick={()=> openDetailModal(p.pokemon)}>
+          <Grid item xs={12} sm={6} md={4} key={index} sx={{ perspective: '1000px' }}>
+            <Card sx={cardStyle} onClick={() => openDetailModal(p.pokemon)}>
               <CardContent>
                 <Box component="img"
                   src={POKEMON_IMG_BASE_URL + p.pokemon.url.split("/").at(-2) + ".png"}
                   alt={"Pokemon" + p.pokemon.name}
-                  sx={imageStyle} 
+                  sx={imageStyle}
                   className="hover-image"
                 />
 
@@ -117,11 +186,35 @@ const TypePage = () => {
               </CardContent>
             </Card>
           </Grid>
+      //     <Grid item xs={12} sm={6} md={4} sx={{ perspective: '1000px' }} >
+      //   <FlippableCard>
+      //     <FrontFace />
+
+      //     <BackFace onClick={() => openDetailModal(p.pokemon)}>
+      //       <CardContent>
+      //         <Box component="img"
+      //           src={POKEMON_IMG_BASE_URL + p.pokemon.url.split("/").at(-2) + ".png"}
+      //           alt={"Pokemon" + p.pokemon.name}
+      //           sx={imageStyle}
+      //           className="hover-image"
+      //         />
+
+      //         <Typography variant="h6">
+      //           {p.pokemon.name.charAt(0).toUpperCase() +
+      //             p.pokemon.name.slice(1)}
+      //         </Typography>
+      //       </CardContent>
+      //     </BackFace>
+      //   </FlippableCard>
+
+      // </Grid>
         ))}
       </Grid>
       <Pagination
         count={Math.ceil(pokemons.length / pageSize)}
         onChange={handlePaginationChange}
+        sx={pagerStyle}
+        color="error"
       />
       <Button
         variant="contained"
@@ -130,7 +223,7 @@ const TypePage = () => {
       >
         Volver a la Lista
       </Button>
-      <DetailModal open={open} pokemon={currentPokemon} handleClose={handleClose}/>
+      <DetailModal open={open} pokemon={currentPokemon} handleClose={handleClose} />
     </Container>
   );
 };

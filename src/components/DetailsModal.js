@@ -89,7 +89,7 @@ export default function DetailModal({ open, pokemon, handleClose }) {
             </Typography>
           </Box>
           <Box sx={abilitiesWrapperStyle}>
-          <Typography align="center">Habilidad</Typography>
+          <Typography align="center">Abilities</Typography>
             {pokemonDetail.abilities.slice(0,2).map((ability, index) => (
               <Typography id="modal-modal-description" sx={abilityTextStyle}>
                 {ability.ability.name}

@@ -12,7 +12,6 @@ export default function Home() {
           <title>Pokémon App</title>
           <meta name="description" content="A simple Pokémon list app using Next.js" />
         </Head>
-        <HeaderBar />
         <PokemonTypeList />
       </div>
     </ThemeProvider>

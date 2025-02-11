@@ -50,9 +50,7 @@ const PokemonTypeList = () => {
           <Grid item xs={12} sm={6} md={4} lg={3} key={index} onClick={() => router.push(`/types/${pokemon.url.split("/").at(-2)}`)}>
               <Card sx={cardStyle}>
                 <CardContent sx={{
-                  '&:hover': {
-                    backgroundColor: theme.palette.error.main,
-                  },
+                
                 }}>
                   <Typography variant="h5">
                     {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
