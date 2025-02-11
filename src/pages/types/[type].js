@@ -5,14 +5,13 @@ import {
   Container,
   Typography,
   Grid2 as Grid,
-  Card,
-  CardContent,
   Button,
   Pagination,
-  Box,
-  styled
 } from "@mui/material";
 import DetailModal from "@/components/DetailsModal";
+import FlipCard from "@/components/FlipCard";
+import { ThemeProvider } from "@mui/material";
+import theme from "@/styles/theme";
 
 const TypePage = () => {
   const router = useRouter();
@@ -31,8 +30,9 @@ const TypePage = () => {
     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 
   /** 
+   * Gets the list of pokemon according to type
    * @author azuniga
-   * 
+   * @param type
    */
   useEffect(() => {
     if (type) {
@@ -46,6 +46,11 @@ const TypePage = () => {
     }
   }, [type]);
 
+  /** 
+   * Page the pokemon list
+   * @author azuniga
+   * @param
+   */
   useEffect(() => {
     setPaginatedList(
       pokemons.slice(count * pageSize, count * pageSize + pageSize)
@@ -87,7 +92,6 @@ const TypePage = () => {
     width: "100%",
     height: "70%",
     opacity: 0,
-    position: "absolute",
     top: "30%",
     left: 0,
     bottom: 0,
@@ -97,134 +101,48 @@ const TypePage = () => {
   }
 
   const pagerStyle = {
-    justifyContent: 'center',
     marginTop: '2rem',
+    ul: {
+      justifyContent: 'center',
+    }
   }
 
   const listContainerStyle = {
-    justifyContent: 'space-between',
-  }
-
-  const FlippableCard = styled('div')({
-    position: 'relative',
-    width: '100%',
-    height: '100%',
-    transition: 'transform 0.6s',
-    transformStyle: 'preserve-3d',
-    '&:hover': {
-      transform: 'rotateY(180deg)'
-    }
-  })
-
-  const CardFace = styled(Card)({
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backfaceVisibility: 'hidden',
-    display: 'flex',
-    alignItems: 'center',
     justifyContent: 'center',
-  });
-
-  const FrontFace = styled(CardFace)({
-    backgroundColor: '#ccc',
-  });
-
-  const BackFace = styled(CardFace)({
-    backgroundColor: '#fff',
-    transform: 'rotateY(180deg)',
-  });
-
-  const FlipCard = ({p}) => {
-    return (
-      <Grid item xs={12} sm={6} md={4} sx={{ perspective: '1000px' }}>
-        <FlippableCard>
-          <FrontFace />
-
-          <BackFace onClick={() => openDetailModal(p.pokemon)}>
-            <CardContent>
-              <Box component="img"
-                src={POKEMON_IMG_BASE_URL + p.pokemon.url.split("/").at(-2) + ".png"}
-                alt={"Pokemon" + p.pokemon.name}
-                sx={imageStyle}
-                className="hover-image"
-              />
-
-              <Typography variant="h6">
-                {p.pokemon.name.charAt(0).toUpperCase() +
-                  p.pokemon.name.slice(1)}
-              </Typography>
-            </CardContent>
-          </BackFace>
-        </FlippableCard>
-
-      </Grid>
-    )
   }
 
   return (
-    <Container sx={{ marginTop: 4, textAlign: "center" }}>
-      <Typography variant="h4" gutterBottom sx={titleStyle}>
-        Pokémon type {pokemonTypeName}
-      </Typography>
-      <Grid container spacing={2} sx={listContainerStyle}>
-        {paginatedList.map((p, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index} sx={{ perspective: '1000px' }}>
-            <Card sx={cardStyle} onClick={() => openDetailModal(p.pokemon)}>
-              <CardContent>
-                <Box component="img"
-                  src={POKEMON_IMG_BASE_URL + p.pokemon.url.split("/").at(-2) + ".png"}
-                  alt={"Pokemon" + p.pokemon.name}
-                  sx={imageStyle}
-                  className="hover-image"
-                />
-
-                <Typography variant="h6">
-                  {p.pokemon.name.charAt(0).toUpperCase() +
-                    p.pokemon.name.slice(1)}
-                </Typography>
-              </CardContent>
-            </Card>
+    <ThemeProvider theme={theme}>
+      <Container sx={{ marginTop: 4, textAlign: "center" }}>
+        <Typography variant="h2" gutterBottom sx={titleStyle}>
+          Pokémon type {pokemonTypeName}
+        </Typography>
+        <div>
+          <Grid container spacing={2} sx={listContainerStyle}>
+            {paginatedList.map((p, index) => (
+              <Grid xs={12} sm={6} md={2} key={index} onClick={() => openDetailModal(p.pokemon)}>
+                <FlipCard p={p} />
+              </Grid>
+            ))}
           </Grid>
-      //     <Grid item xs={12} sm={6} md={4} sx={{ perspective: '1000px' }} >
-      //   <FlippableCard>
-      //     <FrontFace />
+        </div>
 
-      //     <BackFace onClick={() => openDetailModal(p.pokemon)}>
-      //       <CardContent>
-      //         <Box component="img"
-      //           src={POKEMON_IMG_BASE_URL + p.pokemon.url.split("/").at(-2) + ".png"}
-      //           alt={"Pokemon" + p.pokemon.name}
-      //           sx={imageStyle}
-      //           className="hover-image"
-      //         />
-
-      //         <Typography variant="h6">
-      //           {p.pokemon.name.charAt(0).toUpperCase() +
-      //             p.pokemon.name.slice(1)}
-      //         </Typography>
-      //       </CardContent>
-      //     </BackFace>
-      //   </FlippableCard>
-
-      // </Grid>
-        ))}
-      </Grid>
-      <Pagination
-        count={Math.ceil(pokemons.length / pageSize)}
-        onChange={handlePaginationChange}
-        sx={pagerStyle}
-        color="error"
-      />
-      <Button
-        variant="contained"
-        sx={{ marginTop: 2 }}
-        onClick={() => router.push("/")}
-      >
-        Volver a la Lista
-      </Button>
-      <DetailModal open={open} pokemon={currentPokemon} handleClose={handleClose} />
-    </Container>
+        <Pagination
+          count={Math.ceil(pokemons.length / pageSize)}
+          onChange={handlePaginationChange}
+          sx={pagerStyle}
+        />
+        <Button
+          variant="contained"
+          sx={{ marginTop: 2, color: 'white' }}
+          onClick={() => router.push("/")}
+          color="blue"
+        >
+          Back to the list
+        </Button>
+        <DetailModal open={open} pokemon={currentPokemon} handleClose={handleClose} />
+      </Container>
+    </ThemeProvider>
   );
 };
 

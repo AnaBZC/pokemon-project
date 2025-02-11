@@ -55,7 +55,39 @@ const theme = createTheme({
       main: '#ffb9b9',
       light: '#d6cfff',
     },
-  }
+    blue: {
+      main: '#003865',
+      dark: '#0d2134',
+      light: '#d9e4ed',
+    },
+  },
+  components: {
+    MuiPagination: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#fff", // Fondo del paginador
+          padding: "10px",
+          borderRadius: "10px",
+        },
+      },
+    },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: {
+          color: "white", // Color del texto
+          backgroundColor: "#ccc", // Color de los botones
+          "&:hover": {
+            backgroundColor: "#d9e4ed",
+          },
+          "&.Mui-selected": {
+            backgroundColor: "#003865",
+            color: "white",
+            fontWeight: "bold",
+          },
+        },
+      },
+    },
+  },
 });
 
 export default theme;
