@@ -7,15 +7,15 @@ import theme from "@/styles/theme";
 export default function Home() {
   return (
     <ThemeProvider theme={theme}>
-       <div>
-      <HeaderBar/>
-      <Head>
-        <title>Pokémon App</title>
-        <meta name="description" content="A simple Pokémon list app using Next.js" />
-      </Head>
-      <PokemonTypeList />
-    </div>
+      <div>
+        <Head>
+          <title>Pokémon App</title>
+          <meta name="description" content="A simple Pokémon list app using Next.js" />
+        </Head>
+        <HeaderBar />
+        <PokemonTypeList />
+      </div>
     </ThemeProvider>
-   
+
   );
 }

@@ -22,8 +22,8 @@ const TypePage = () => {
   const [pokemonTypeName, setPokemonTypeName] = useState("");
   const [count, setCount] = useState(0);
   const [pageSize, setPageSize] = useState(20);
-  const [open, setOpen] = React.useState(false);
-  const [ currentPokemon, setCurrentPokemon] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [currentPokemon, setCurrentPokemon] = useState(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -85,7 +85,6 @@ const TypePage = () => {
     bottom: 0,
     right: 0,
     objectFit: "contain",
-    //transform: "translate(-50%, -50%)",
     transition: "opacity 0.3s ease-in-out",
   }
 
@@ -96,7 +95,6 @@ const TypePage = () => {
 
   return (
     <Container sx={{ marginTop: 4, textAlign: "center" }}>
-      <DetailModal open={open} pokemon={currentPokemon} handleClose={handleClose}/>
       <Typography variant="h4" gutterBottom>
         Pokémon de tipo {pokemonTypeName}
       </Typography>
@@ -132,6 +130,7 @@ const TypePage = () => {
       >
         Volver a la Lista
       </Button>
+      <DetailModal open={open} pokemon={currentPokemon} handleClose={handleClose}/>
     </Container>
   );
 };

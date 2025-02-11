@@ -35,7 +35,12 @@ const theme = createTheme({
     primary: {
       main: '#ccc',
       dark: '#4f5254',
-      light: '#f2f2f2',
+      light: '#E6E6E6',
+    },
+    gray: {
+      main: '#ccc',
+      dark: '#4f5254',
+      light: '#E6E6E6',
     },
     warning: {
       main: '#ffc67e',
