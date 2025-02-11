@@ -23,5 +23,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 
 ## Live version
-[Ana B - Pokemon Project]([https://nextjs.org](https://pokemon-project-tau.vercel.app/))
+[Ana B - Pokemon Project]([https://nextjs.org](https://pokemon-project-tau.vercel.app/)
 
