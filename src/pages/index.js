@@ -1,5 +1,5 @@
 import Head from "next/head";
-import PokemonList from "../components/PokemonList";
+import PokemonTypeList from "../components/PokemonTypeList";
 import HeaderBar from "../components/Heder";
 import { ThemeProvider } from "@mui/material";
 import theme from "@/styles/theme";
@@ -13,7 +13,7 @@ export default function Home() {
         <title>Pokémon App</title>
         <meta name="description" content="A simple Pokémon list app using Next.js" />
       </Head>
-      <PokemonList />
+      <PokemonTypeList />
     </div>
     </ThemeProvider>
    

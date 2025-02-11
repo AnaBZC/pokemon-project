@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, Typography, Container, Grid2 as Grid, useTheme, CardActionArea, Link } from "@mui/material";
+import { useRouter } from "next/router";
 
 // Llamada al API
 import { fetchPokemons } from "../../api/api";
 
-const PokemonList = () => {
+const PokemonTypeList = () => {
   const [pokemons, setPokemons] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const getPokemons = async () => {
@@ -41,13 +43,12 @@ const PokemonList = () => {
   return (
     <Container sx={contentStyles}>
       <Typography variant="h3" align="center" sx={titleStyle}>
-        Pokémon List
+        Pokémon Type List
       </Typography>
       <Grid container spacing={2} sx={listContainerStyle}>
         {pokemons.map((pokemon, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={index} onClick={() => router.push(`/types/${pokemon.url.split("/").at(-2)}`)}>
               <Card sx={cardStyle}>
-
                 <CardContent sx={{
                   '&:hover': {
                     backgroundColor: theme.palette.error.main,
@@ -57,7 +58,6 @@ const PokemonList = () => {
                     {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
                   </Typography>
                 </CardContent>
-
               </Card>
           </Grid>
         ))}
@@ -66,4 +66,4 @@ const PokemonList = () => {
   );
 };
 
-export default PokemonList;
+export default PokemonTypeList;
