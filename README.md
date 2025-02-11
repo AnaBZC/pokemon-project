@@ -20,3 +20,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - NextJs
 - Material UI
 - Axios
+
+
+## Live version
+[Ana B - Pokemon Project]([https://nextjs.org](https://pokemon-project-tau.vercel.app/))
+
