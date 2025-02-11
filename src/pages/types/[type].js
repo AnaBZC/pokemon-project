@@ -7,6 +7,7 @@ import {
   Grid2 as Grid,
   Button,
   Pagination,
+  Skeleton
 } from "@mui/material";
 import DetailModal from "@/components/DetailsModal";
 import FlipCard from "@/components/FlipCard";
@@ -17,6 +18,7 @@ import SearchBar from "@/components/SearchBar";
 const TypePage = () => {
   const router = useRouter();
   const { type } = router.query; // Obtiene el parámetro desde la URL
+  const [loading, setLoading] = useState(true);
   const [pokemons, setPokemons] = useState([]);
   const [paginatedList, setPaginatedList] = useState([]);
   const [pokemonTypeName, setPokemonTypeName] = useState("");
@@ -42,6 +44,7 @@ const TypePage = () => {
         .then((response) => {
           setPokemons(response.data.pokemon);
           setPokemonTypeName(response.data.name);
+          setLoading(false)
         })
         .catch((error) => console.error("Error fetching Pokémon type:", error));
     }
@@ -57,9 +60,6 @@ const TypePage = () => {
       pokemons.slice(count * pageSize, count * pageSize + pageSize)
     );
   }, [count, pokemons]);
-
-  if (!pokemons.length)
-    return <Typography align="center">Cargando...</Typography>;
 
   const handlePaginationChange = (event, value) => {
     setCount(value - 1);
@@ -122,6 +122,26 @@ const TypePage = () => {
     justifyContent: 'center',
   }
 
+  if(!loading && !pokemons.length) 
+    return <>
+    <ThemeProvider theme={theme}>
+      <Container sx={{ marginTop: 4, textAlign: "center" }}>
+        <Typography variant="h2" gutterBottom sx={titleStyle}>
+          Pokémon type {pokemonTypeName}
+        </Typography>
+      <Typography align="center">The list is empty...</Typography>;
+      <Button
+          variant="contained"
+          sx={{ marginTop: 2, color: 'white' }}
+          onClick={() => router.push("/")}
+          color="blue"
+        >
+          Back to the list
+        </Button>
+      </Container>
+      </ThemeProvider>
+    </>
+
   return (
     <ThemeProvider theme={theme}>
       <Container sx={{ marginTop: 4, textAlign: "center" }}>
@@ -130,13 +150,33 @@ const TypePage = () => {
         </Typography>
         <SearchBar onSearch={handleSearch}/>
         <div>
-          <Grid container spacing={2} sx={listContainerStyle}>
-            {paginatedList.map((p, index) => (
-              <Grid xs={12} sm={6} md={2} key={index} onClick={() => openDetailModal(p.pokemon)}>
-                <FlipCard p={p} />
+        {loading ?
+            <Grid container spacing={2} sx={listContainerStyle}>
+              
+                  <Grid xs={12} sm={6} md={2} key={"1"} >
+                    <Skeleton animation="wave" sx={cardStyle}/>
+                  </Grid>
+                  <Grid xs={12} sm={6} md={2} key={"2"} >
+                    <Skeleton animation="wave" sx={cardStyle}/>
+                  </Grid>
+                  <Grid xs={12} sm={6} md={2} key={"3"}>
+                    <Skeleton animation="wave" sx={cardStyle}/>
+                  </Grid>
+
+                 
+              
               </Grid>
-            ))}
-          </Grid>
+          
+          :
+            <Grid container spacing={2} sx={listContainerStyle}>
+              {paginatedList.map((p, index) => (
+                <Grid xs={12} sm={6} md={2} key={index} onClick={() => openDetailModal(p.pokemon)}>
+                  <FlipCard p={p} />
+                </Grid>
+              ))}
+            </Grid>
+        }
+          
         </div>
 
         <Pagination
