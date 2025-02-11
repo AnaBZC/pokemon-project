@@ -2,20 +2,20 @@ import React from 'react';
 import { Card, CardContent, Typography, styled, Box } from '@mui/material';
 
 const CardContainer = styled('div')({
-  perspective: '1000px', // Perspectiva para el efecto 3D
-  width: '200px', // Ancho de la tarjeta
-  height: '300px', // Alto de la tarjeta
-  margin: '20px', // Margen para separar de otros elementos
+  perspective: '1000px', 
+  width: '200px', 
+  height: '300px', 
+  margin: '20px', 
 });
 
 const FlippableCard = styled('div')({
   position: 'relative',
   width: '100%',
   height: '100%',
-  transition: 'transform 0.6s', // Duración de la animación
-  transformStyle: 'preserve-3d', // Mantiene el efecto 3D
+  transition: 'transform 0.6s', 
+  transformStyle: 'preserve-3d', 
   '&:hover': {
-    transform: 'rotateY(180deg)', // Gira la tarjeta al hacer hover
+    transform: 'rotateY(180deg)', 
   },
 });
 
@@ -23,16 +23,16 @@ const CardFace = styled(Card)({
   position: 'absolute',
   width: '100%',
   height: '100%',
-  backfaceVisibility: 'hidden', // Oculta la parte trasera de la cara
+  backfaceVisibility: 'hidden', 
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Sombra para mejor apariencia
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', 
   border: '10px solid #ccc',
 });
 
 const FrontFace = styled(CardFace)({
-  backgroundColor: '#6200ea', // Color de la cara frontal
+  backgroundColor: '#6200ea', 
   backgroundImage: `url(/pokemon-card.png)`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
@@ -40,8 +40,8 @@ const FrontFace = styled(CardFace)({
 });
 
 const BackFace = styled(CardFace)({
-  backgroundColor: '#d4c902', // Color de la cara trasera
-  transform: 'rotateY(180deg)', // Gira la cara trasera 180 grados
+  backgroundColor: '#d4c902', 
+  transform: 'rotateY(180deg)', 
 
 });
 

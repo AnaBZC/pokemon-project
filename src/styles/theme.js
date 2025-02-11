@@ -24,6 +24,7 @@ const theme = createTheme({
     h5: {
       fontSize: 14,
       fontWeight: 700,
+      color: 'white'
     },
     h6: {
       fontSize: 12,
@@ -31,7 +32,7 @@ const theme = createTheme({
     },
   },
   palette: {
-    mode: "dark",
+    mode: "light",
     primary: {
       main: '#ccc',
       dark: '#4f5254',

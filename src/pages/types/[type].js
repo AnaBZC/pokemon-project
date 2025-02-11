@@ -12,6 +12,7 @@ import DetailModal from "@/components/DetailsModal";
 import FlipCard from "@/components/FlipCard";
 import { ThemeProvider } from "@mui/material";
 import theme from "@/styles/theme";
+import SearchBar from "@/components/SearchBar";
 
 const TypePage = () => {
   const router = useRouter();
@@ -64,6 +65,17 @@ const TypePage = () => {
     setCount(value - 1);
   };
 
+  const handleSearch = (search) => {
+    if(search && search != "") {
+      const pokemonQuery = pokemons.filter(p => (p.pokemon.name.toLowerCase()).includes(search.toLowerCase()) )
+      setPaginatedList(pokemonQuery)
+    } else {
+      setPaginatedList(
+        pokemons.slice(count * pageSize, count * pageSize + pageSize)
+      );
+    }
+  }
+
   const openDetailModal = (pokemon) => {
     setOpen(true)
     setCurrentPokemon(pokemon.url)
@@ -79,9 +91,8 @@ const TypePage = () => {
     position: "relative",
     transition: "0.3s",
     "&:hover .hover-image": {
-      //transform: "scale(1.05)",
       opacity: 1
-    }, // Efecto de escala en hover
+    }, 
   };
 
   const titleStyle = {
@@ -117,6 +128,7 @@ const TypePage = () => {
         <Typography variant="h2" gutterBottom sx={titleStyle}>
           Pokémon type {pokemonTypeName}
         </Typography>
+        <SearchBar onSearch={handleSearch}/>
         <div>
           <Grid container spacing={2} sx={listContainerStyle}>
             {paginatedList.map((p, index) => (
